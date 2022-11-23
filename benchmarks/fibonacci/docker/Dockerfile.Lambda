@@ -15,7 +15,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# fibonacciORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
@@ -33,4 +33,17 @@ COPY ./benchmarks/fibonacci/python/requirements/aws_lambda.txt ./requirements.tx
 RUN  pip3 install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
 # Set the CMD to handler
+CMD [ "server.lambda_handler" ]
+
+#---------- NodeJS -----------#
+FROM public.ecr.aws/lambda/nodejs:18 as fibonacciNodeJSLambda
+
+# Copy function code
+COPY ./benchmarks/fibonacci/nodejs/server.js ./
+COPY ./benchmarks/fibonacci/nodejs/package.json ./
+
+# Install NPM dependencies for function
+RUN npm install
+
+# Set the CMD to your handler
 CMD [ "server.lambda_handler" ]
