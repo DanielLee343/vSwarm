@@ -153,7 +153,7 @@ jobs:
 
       - name: Deploy Functions as Knative Services
         env:
-          BUCKET_NAME: vhive-stacking
+          BUCKET_NAME: vhive-tuning
         run: tools/kn_deploy.sh benchmarks/tuning-halving/knative_yamls/s3/*
 
       - name: Check if the Service is Ready
